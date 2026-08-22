@@ -60,6 +60,10 @@ flutter:
   # the material Icons class.
   uses-material-design: true
 
+  assets:
+    - docs/branding/despensa-app-icon.png
+    - docs/branding/despensa-logo.png
+
   # To add assets to your application, add an assets section, like this:
   # assets:
   #   - images/a_dot_burr.jpeg

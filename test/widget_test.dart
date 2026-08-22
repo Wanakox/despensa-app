@@ -1,15 +1,12 @@
-import 'package:despensa/main.dart';
+import 'package:despensa/app/despensa_app.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
-  testWidgets('muestra la presentación inicial de Despensa', (tester) async {
+  testWidgets('muestra la pantalla de inicio de sesión', (tester) async {
     await tester.pumpWidget(const DespensaApp());
 
-    expect(find.text('Despensa'), findsOneWidget);
-    expect(find.text('Tu hogar, mejor organizado'), findsOneWidget);
-    expect(
-      find.text('Proyecto base configurado correctamente.'),
-      findsOneWidget,
-    );
+    expect(find.text('Hola de nuevo'), findsOneWidget);
+    expect(find.text('Correo electrónico'), findsOneWidget);
+    expect(find.text('Iniciar sesión'), findsOneWidget);
   });
 }
