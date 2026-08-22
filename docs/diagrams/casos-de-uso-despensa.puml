@@ -3,7 +3,7 @@
 left to right direction
 skinparam packageStyle rectangle
 skinparam shadowing false
-actor Visitante as A1
+actor "Usuario no registrado" as A1
 actor Usuario as A2
 actor "Miembro del hogar" as A3
 actor "Propietario del hogar" as A4
@@ -13,30 +13,27 @@ A4 --|> A3
 rectangle "Despensa" {
   package "Cuenta y sesión" {
     usecase "CU-01\nRegistrarse" as CU_01
-    usecase "CU-02\nIniciar sesión" as CU_02
-    usecase "CU-03\nCerrar sesión" as CU_03
+    usecase "CU-02\nIniciarSesión" as CU_02
+    usecase "CU-03\nCerrarSesión" as CU_03
   }
   package "Hogar" {
-    usecase "CU-04\nCrear hogar" as CU_04
-    usecase "CU-05\nConsultar hogar activo" as CU_05
-    usecase "CU-06\nInvitar miembro" as CU_06
-    usecase "CU-07\nConsultar miembros" as CU_07
-    usecase "CU-08\nRetirar miembro" as CU_08
+    usecase "CU-04\nCrearHogar" as CU_04
+    usecase "CU-05\nConsultarHogar" as CU_05
+    usecase "CU-06\nInvitarMiembro" as CU_06
+    usecase "CU-07\nRetirarMiembro" as CU_07
   }
   package "Inventario" {
-    usecase "CU-09\nConsultar inventario" as CU_09
-    usecase "CU-10\nAñadir producto" as CU_10
-    usecase "CU-11\nModificar producto" as CU_11
-    usecase "CU-12\nEliminar producto" as CU_12
-    usecase "CU-13\nAjustar cantidad" as CU_13
-    usecase "CU-14\nBuscar productos" as CU_14
+    usecase "CU-08\nAñadirProducto" as CU_08
+    usecase "CU-09\nModificarProducto" as CU_09
+    usecase "CU-10\nEliminarProducto" as CU_10
+    usecase "CU-11\nBuscarProductos" as CU_11
   }
   package "Cesta compartida" {
-    usecase "CU-15\nConsultar cesta" as CU_15
-    usecase "CU-16\nAñadir elemento a la cesta" as CU_16
-    usecase "CU-17\nModificar elemento de la cesta" as CU_17
-    usecase "CU-18\nRetirar elemento de la cesta" as CU_18
-    usecase "CU-19\nMarcar o desmarcar como comprado" as CU_19
+    usecase "CU-12\nConsultarCesta" as CU_12
+    usecase "CU-13\nAñadirACesta" as CU_13
+    usecase "CU-14\nModificarCesta" as CU_14
+    usecase "CU-15\nRetirarDeCesta" as CU_15
+    usecase "CU-16\nMarcarComprado" as CU_16
   }
 }
 A1 --> CU_01
@@ -48,8 +45,8 @@ Firebase --> CU_03
 A2 --> CU_04
 A3 --> CU_05
 A4 --> CU_06
-A3 --> CU_07
-A4 --> CU_08
+A4 --> CU_07
+A3 --> CU_08
 A3 --> CU_09
 A3 --> CU_10
 A3 --> CU_11
@@ -58,7 +55,4 @@ A3 --> CU_13
 A3 --> CU_14
 A3 --> CU_15
 A3 --> CU_16
-A3 --> CU_17
-A3 --> CU_18
-A3 --> CU_19
 @enduml
