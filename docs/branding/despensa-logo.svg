@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="360" viewBox="0 0 1200 360">
+  <rect width="1200" height="360" rx="48" fill="#F8F5EE"/>
+  <g transform="translate(48 34) scale(.57)">
+    <path d="M155 208v175c0 17 14 31 31 31h140c17 0 31-14 31-31V208" fill="#E8EFE9" stroke="#5F876A" stroke-width="22" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M139 214l117-91 117 91" fill="none" stroke="#5F876A" stroke-width="22" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M190 278h132M190 346h132" fill="none" stroke="#5F876A" stroke-width="18" stroke-linecap="round"/>
+    <circle cx="219" cy="247" r="15" fill="#CB6D4F"/>
+    <rect x="242" y="230" width="34" height="32" rx="10" fill="#5F876A"/>
+    <path d="M296 260v-24c0-9 7-16 16-16s16 7 16 16v24" fill="#D7B67A"/>
+    <path d="M250 119c4-29 25-50 57-55-1 30-21 52-57 55Z" fill="#CB6D4F"/>
+    <path d="M253 119c-7-25-27-40-55-41 4 27 22 43 55 41Z" fill="#88A68F"/>
+  </g>
+  <text x="390" y="190" fill="#27241F" font-family="Nunito Sans, Nunito, Arial, sans-serif" font-size="108" font-weight="800" letter-spacing="-3">Despensa</text>
+  <text x="396" y="247" fill="#6E6A62" font-family="Nunito Sans, Nunito, Arial, sans-serif" font-size="30" font-weight="500" letter-spacing="1">TU HOGAR, SIEMPRE ORGANIZADO</text>
+</svg>
