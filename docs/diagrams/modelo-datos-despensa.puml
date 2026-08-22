@@ -1,0 +1,95 @@
+@startuml
+!pragma layout smetana
+scale 0.8
+hide circle
+skinparam shadowing false
+skinparam linetype ortho
+footer Modelo de datos Despensa
+
+entity Usuario {
+  * userId : String <<PK>>
+  --
+  email : String
+  displayName : String
+  createdAt : Timestamp
+  updatedAt : Timestamp
+}
+
+entity Hogar {
+  * householdId : String <<PK>>
+  --
+  name : String
+  ownerId : String <<FK>>
+  createdAt : Timestamp
+  updatedAt : Timestamp
+}
+
+entity Miembro {
+  * householdId : String <<PK,FK>>
+  * userId : String <<PK,FK>>
+  --
+  role : owner | member
+  displayName : String
+  email : String
+  joinedAt : Timestamp
+}
+
+entity Producto {
+  * productId : String <<PK>>
+  --
+  householdId : String <<FK>>
+  name : String
+  quantity : Number?
+  unit : String?
+  categoryId : String?
+  locationId : String?
+  expirationDate : Timestamp?
+}
+
+entity Categoria {
+  * categoryId : String <<PK>>
+  --
+  householdId : String <<FK>>
+  name : String
+  color : String?
+}
+
+entity Ubicacion {
+  * locationId : String <<PK>>
+  --
+  householdId : String <<FK>>
+  name : String
+}
+
+entity ElementoCesta {
+  * itemId : String <<PK>>
+  --
+  householdId : String <<FK>>
+  name : String
+  quantity : Number
+  unit : String
+  purchased : Boolean
+  sourceProductId : String?
+}
+
+entity Notificacion {
+  * notificationId : String <<PK>>
+  --
+  userId : String <<FK>>
+  householdId : String?
+  type : String
+  title : String
+  message : String
+  read : Boolean
+}
+
+Usuario ||--o{ Miembro : pertenece
+Hogar ||--|{ Miembro : contiene
+Hogar ||--o{ Producto : posee
+Hogar ||--o{ Categoria : define
+Hogar ||--o{ Ubicacion : define
+Hogar ||--o{ ElementoCesta : comparte
+Categoria |o--o{ Producto : clasifica
+Ubicacion |o--o{ Producto : almacena
+Usuario ||--o{ Notificacion : recibe
+@enduml
