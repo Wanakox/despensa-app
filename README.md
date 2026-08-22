@@ -5,8 +5,8 @@ fechas de caducidad, y crear cestas de la compra compartidas.
 
 ## Estado
 
-Proyecto académico en fase de análisis y diseño. El producto mínimo viable se
-desarrollará de forma incremental mediante sprints de cuatro días.
+Proyecto académico en desarrollo. El producto mínimo viable se construye de
+forma incremental mediante sprints de cuatro días.
 
 ## Tecnologías
 
@@ -28,9 +28,31 @@ flutter pub get
 flutter run
 ```
 
-La configuración de Firebase se añadirá cuando se cree el proyecto correspondiente
-en Firebase Console. Los archivos de credenciales específicos de cada entorno no se
-deben publicar sin revisar antes su contenido.
+### Configuración de Firebase
+
+La aplicación usa el identificador Android `com.wanakox.despensa`. Para conectar
+un proyecto Firebase es necesario iniciar sesión con una cuenta autorizada y ejecutar:
+
+```bash
+dart pub global activate flutterfire_cli
+flutterfire configure --platforms=android
+```
+
+Este proceso debe generar `lib/firebase_options.dart` y registrar la aplicación
+Android. Después se habilitan en Firebase Console el acceso por correo y contraseña
+y Cloud Firestore. Los archivos generados deben revisarse antes de publicarlos.
+
+## Arquitectura
+
+El código de `lib/` se organiza por responsabilidad:
+
+- `app/`: aplicación, tema y configuración visual.
+- `core/`: componentes reutilizables y servicios compartidos.
+- `features/`: funcionalidades independientes como autenticación, inicio,
+  inventario, cesta, miembros y perfil.
+
+La interfaz utiliza Material 3 y la identidad visual del prototipo: fondo marfil,
+verde salvia como color principal y terracota como acento.
 
 ## Organización
 
