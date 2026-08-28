@@ -47,3 +47,7 @@ app.*.map.json
 
 # Widget Preview related
 .widget_preview/
+
+# Entregables binarios publicados como assets de GitHub Releases.
+/docs/entrega/*.apk
+/docs/entrega/*.inspect.ndjson

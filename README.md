@@ -5,8 +5,24 @@ fechas de caducidad, y crear cestas de la compra compartidas.
 
 ## Estado
 
-Proyecto académico en desarrollo. El producto mínimo viable se construye de
-forma incremental mediante sprints de cuatro días.
+Producto mínimo viable completado en cuatro sprints. La versión 1.0 incluye la
+aplicación Android, memoria final, presentación y evidencias de prueba.
+
+## Calidad y entrega
+
+- `flutter analyze`: sin incidencias.
+- `flutter test`: 25 pruebas superadas.
+- APK release verificado mediante SHA-256.
+- Memoria y presentación disponibles en `docs/entrega/`.
+
+Para reproducir la comprobación final:
+
+```bash
+flutter analyze
+flutter test
+flutter build apk --release
+sha256sum build/app/outputs/flutter-apk/app-release.apk
+```
 
 ## Tecnologías
 
