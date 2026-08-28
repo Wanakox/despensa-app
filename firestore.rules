@@ -37,6 +37,12 @@ service cloud.firestore {
         && invitation.data.status == 'accepted';
     }
 
+    function createsOwnedHousehold(householdId) {
+      return signedIn()
+        && !exists(/databases/$(database)/documents/households/$(householdId))
+        && getAfter(/databases/$(database)/documents/households/$(householdId)).data.ownerId == request.auth.uid;
+    }
+
     match /users/{userId} {
       allow create: if signedIn() && request.auth.uid == userId;
       allow read, update: if signedIn() && request.auth.uid == userId;
@@ -61,6 +67,7 @@ service cloud.firestore {
         allow read: if isHouseholdMember(householdId);
         allow create: if signedIn()
           && (isHouseholdOwner(householdId)
+            || (userId == request.auth.uid && createsOwnedHousehold(householdId))
             || (userId == request.auth.uid && acceptsValidInvitation(householdId)));
         allow update: if isHouseholdOwner(householdId)
           || (signedIn()
