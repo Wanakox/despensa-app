@@ -70,8 +70,8 @@ for name in ['Normal','Heading 1','Heading 2','Heading 3','Caption','List Bullet
 if 'Table Grid' not in doc.styles:
     doc.styles.add_style('Table Grid', WD_STYLE_TYPE.TABLE)
 doc.styles['Normal'].font.name='Garamond'; doc.styles['Normal'].font.size=Pt(11); doc.styles['Normal'].paragraph_format.space_after=Pt(6); doc.styles['Normal'].paragraph_format.line_spacing=1.15
-for name,size in [('Heading 1',15),('Heading 2',12.5),('Heading 3',11.5)]:
-    s=doc.styles[name]; s.font.name='Garamond'; s.font.size=Pt(size); s.font.bold=True; s.font.color.rgb=RGBColor.from_string(BLUE); s.paragraph_format.space_before=Pt(10); s.paragraph_format.space_after=Pt(5); s.paragraph_format.keep_with_next=True
+for name,size,before,after in [('Heading 1',12,0,3),('Heading 2',11.5,3,2),('Heading 3',11,2,1)]:
+    s=doc.styles[name]; s.font.name='Garamond'; s.font.size=Pt(size); s.font.bold=True; s.font.color.rgb=RGBColor.from_string(BLUE); s.paragraph_format.space_before=Pt(before); s.paragraph_format.space_after=Pt(after); s.paragraph_format.left_indent=Inches(0); s.paragraph_format.first_line_indent=Inches(0); s.paragraph_format.keep_with_next=True
 doc.styles['Caption'].font.name='Garamond'; doc.styles['Caption'].font.size=Pt(9); doc.styles['Caption'].font.italic=True; doc.styles['Caption'].font.color.rgb=RGBColor.from_string(GRAY)
 
 # Portada institucional de la plantilla.
@@ -86,7 +86,45 @@ p=doc.add_paragraph('Córdoba, agosto de 2026'); p.alignment=WD_ALIGN_PARAGRAPH.
 page(doc)
 
 doc.add_heading('ÍNDICE DE CONTENIDOS',1)
-for item in ['1. Especificación y Análisis del problema','   1.1. Visión general del proyecto de aplicación móvil','   1.2. Descripción gráfica y ergonómica de la aplicación','   1.3. Descripción funcional y técnica. Métricas KPI','   1.4. Desarrollo backend de aplicaciones móviles','   1.5. Descripción de los tipos de pruebas a realizar','   1.6. Servicios integrados, proveedores y planificación','2. Desarrollo del proyecto acorde a SCRUM','3. Casos de Prueba','4. Conclusiones','Referencias bibliográficas','ANEXO I. Especificaciones funcionales','ANEXO II. Especificaciones formales del sistema']: para(doc,item)
+toc = [
+    (0,'1. Especificación y Análisis del problema'),
+    (1,'1.1. Visión general del proyecto de aplicación móvil'),
+    (2,'1.1.1. Presentación del proyecto'), (2,'1.1.2. Objetivos'),
+    (2,'1.1.3. Público objetivo'), (2,'1.1.4. Objetivos cuantitativos'),
+    (2,'1.1.5. Especificaciones técnicas'), (2,'1.1.6. Recursos existentes'),
+    (2,'1.1.7. Aplicaciones similares'),
+    (1,'1.2. Descripción gráfica y ergonómica de la aplicación'),
+    (2,'1.2.1. Identidad gráfica'), (2,'1.2.2. Diseño de interfaz y navegación'),
+    (1,'1.3. Descripción funcional y técnica. Métricas de rendimiento (KPI)'),
+    (2,'1.3.1. Requisitos funcionales'), (2,'1.3.2. Requisitos no funcionales'),
+    (2,'1.3.3. Modelo de casos de uso'), (2,'1.3.4. KPI'),
+    (1,'1.4. Desarrollo backend de aplicaciones móviles'),
+    (2,'1.4.1. Arquitectura'), (2,'1.4.2. Modelo de datos'),
+    (2,'1.4.3. Seguridad y tiempo real'),
+    (1,'1.5. Descripción de los tipos de pruebas a realizar'),
+    (2,'1.5.1. Herramientas'), (2,'1.5.2. Alcance y metodología'),
+    (2,'1.5.3. Resultado'),
+    (1,'1.6. Servicios integrados, proveedores y planificación'),
+    (0,'2. Desarrollo del proyecto acorde a SCRUM'),
+    (1,'2.1. Herramientas para la gestión'), (1,'2.2. Roles'),
+    (1,'2.3. Componentes y reuniones'), (1,'2.4. Sprints'),
+    (2,'2.4.1. Sprint 1 — Análisis y Diseño'),
+    (2,'2.4.2. Sprint 2 — Base técnica e inventario'),
+    (2,'2.4.3. Sprint 3 — Cesta, caducidad y colaboración'),
+    (2,'2.4.4. Sprint 4 — Calidad y cierre'),
+    (1,'2.5. Seguimiento final de issues'),
+    (0,'3. Casos de Prueba'), (1,'3.1. Especificación'),
+    (0,'4. Conclusiones'), (1,'4.1. Puntos fuertes'),
+    (1,'4.2. Puntos débiles'), (1,'4.3. Mejoras futuras'),
+    (0,'Referencias bibliográficas'), (0,'ANEXOS'),
+    (1,'ANEXO I. Especificaciones funcionales'),
+    (1,'ANEXO II. Especificaciones formales del sistema'),
+    (2,'1. Diseño arquitectónico'), (2,'2. Diseño de la base de datos'),
+    (2,'3. Evidencias de interfaz y proceso'),
+]
+for level,item in toc:
+    p=doc.add_paragraph(); p.paragraph_format.left_indent=Inches(0.22*level); p.paragraph_format.space_after=Pt(1); p.paragraph_format.line_spacing=1.0
+    r=p.add_run(item); r.font.name='Garamond'; r.font.size=Pt(9.5 if level==0 else 9); r.bold=(level==0); r.font.color.rgb=RGBColor.from_string(BLUE)
 page(doc)
 
 doc.add_heading('1. Especificación y Análisis del problema',1)
