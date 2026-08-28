@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "656528073918",
+    "project_id": "despensa-78ac5",
+    "storage_bucket": "despensa-78ac5.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:656528073918:android:5b58cf40e47c8b90f2eaef",
+        "android_client_info": {
+          "package_name": "com.wanakox.despensa"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBAnyFGzr8X_aRD2cw-yeTTOLMZhwnDGVE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

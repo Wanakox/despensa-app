@@ -42,6 +42,39 @@ Este proceso debe generar `lib/firebase_options.dart` y registrar la aplicación
 Android. Después se habilitan en Firebase Console el acceso por correo y contraseña
 y Cloud Firestore. Los archivos generados deben revisarse antes de publicarlos.
 
+Las reglas e índices se despliegan con:
+
+```bash
+firebase deploy --only firestore:rules,firestore:indexes
+```
+
+### Emuladores de Firebase
+
+El repositorio incluye puertos para Authentication, Firestore y la interfaz de
+Firebase Emulator Suite. Para probar las reglas sin modificar datos reales:
+
+```bash
+firebase emulators:start --only auth,firestore
+```
+
+La aplicación mantiene un modo local cuando Firebase no está configurado. En una
+sesión autenticada, inventario, cesta, miembros y métricas del inicio se sincronizan
+en tiempo real con el hogar seleccionado.
+
+### Modelo colaborativo
+
+- Los propietarios pueden invitar por correo, renombrar o eliminar el hogar,
+  gestionar miembros y transferir la propiedad.
+- Los usuarios invitados ven la invitación en «Mis hogares» y pueden aceptarla o
+  rechazarla.
+- Los miembros pueden abandonar un hogar y editar inventario y cesta compartidos.
+- El paso de productos comprados a la despensa se guarda como una operación atómica.
+- El perfil se abre desde «Mis hogares» y permite cambiar nombre y contraseña o
+  eliminar la cuenta; el correo no se modifica.
+- El inicio muestra la actividad compartida ordenada por la hora del servidor.
+- El inventario ofrece filtros A–Z, agotados y caducados, además de edición rápida
+  de unidades. La cesta se puede vaciar completa con confirmación.
+
 ## Arquitectura
 
 El código de `lib/` se organiza por responsabilidad:

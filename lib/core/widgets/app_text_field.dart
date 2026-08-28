@@ -1,7 +1,18 @@
 import 'package:flutter/material.dart';
 
 class AppTextField extends StatelessWidget {
-  const AppTextField({required this.label, this.hintText, this.controller, this.keyboardType, this.obscureText = false, this.prefixIcon, this.suffixIcon, super.key});
+  const AppTextField({
+    required this.label,
+    this.hintText,
+    this.controller,
+    this.keyboardType,
+    this.obscureText = false,
+    this.prefixIcon,
+    this.suffixIcon,
+    this.suffixText,
+    this.validator,
+    super.key,
+  });
 
   final String label;
   final String? hintText;
@@ -10,6 +21,8 @@ class AppTextField extends StatelessWidget {
   final bool obscureText;
   final IconData? prefixIcon;
   final Widget? suffixIcon;
+  final String? suffixText;
+  final String? Function(String?)? validator;
 
   @override
   Widget build(BuildContext context) {
@@ -18,11 +31,17 @@ class AppTextField extends StatelessWidget {
       children: [
         Text(label, style: Theme.of(context).textTheme.titleSmall),
         const SizedBox(height: 8),
-        TextField(
+        TextFormField(
           controller: controller,
           keyboardType: keyboardType,
           obscureText: obscureText,
-          decoration: InputDecoration(hintText: hintText, prefixIcon: prefixIcon == null ? null : Icon(prefixIcon), suffixIcon: suffixIcon),
+          validator: validator,
+          decoration: InputDecoration(
+            hintText: hintText,
+            prefixIcon: prefixIcon == null ? null : Icon(prefixIcon),
+            suffixIcon: suffixIcon,
+            suffixText: suffixText,
+          ),
         ),
       ],
     );
