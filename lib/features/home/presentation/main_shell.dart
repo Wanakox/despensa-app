@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../core/services/auth_service.dart';
+import '../../../core/services/expiration_preferences.dart';
 import '../../auth/presentation/login_screen.dart';
 import '../../cart/presentation/cart_screen.dart';
 import '../../inventory/presentation/inventory_screen.dart';
@@ -21,6 +22,21 @@ class _MainShellState extends State<MainShell> {
   int _selectedIndex = 0;
   int _cartRevision = 0;
   int _inventoryRevision = 0;
+  int _expirationWarningDays = ExpirationPreferences.defaultWarningDays;
+
+  @override
+  void initState() {
+    super.initState();
+    _loadExpirationPreferences();
+  }
+
+  Future<void> _loadExpirationPreferences() async {
+    final days = await ExpirationPreferences.load(
+      householdName: widget.householdName,
+      householdId: widget.householdId,
+    );
+    if (mounted) setState(() => _expirationWarningDays = days);
+  }
 
   Future<void> _logout() async {
     await AuthService.signOut();
@@ -39,12 +55,14 @@ class _MainShellState extends State<MainShell> {
         householdName: widget.householdName,
         onNavigate: (index) => setState(() => _selectedIndex = index),
         onLogout: _logout,
+        expirationWarningDays: _expirationWarningDays,
       ),
       InventoryScreen(
         key: ValueKey(_inventoryRevision),
         householdId: widget.householdId,
         householdName: widget.householdName,
         onCartChanged: () => setState(() => _cartRevision++),
+        expirationWarningDays: _expirationWarningDays,
       ),
       CartScreen(
         key: ValueKey(_cartRevision),
@@ -55,6 +73,9 @@ class _MainShellState extends State<MainShell> {
       MembersScreen(
         householdId: widget.householdId,
         householdName: widget.householdName,
+        expirationWarningDays: _expirationWarningDays,
+        onExpirationWarningDaysChanged: (days) =>
+            setState(() => _expirationWarningDays = days),
       ),
     ];
     return Scaffold(

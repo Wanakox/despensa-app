@@ -14,11 +14,13 @@ class InventoryScreen extends StatefulWidget {
     this.householdName = 'demo',
     this.householdId,
     this.onCartChanged,
+    this.expirationWarningDays = 3,
     super.key,
   });
   final String householdName;
   final String? householdId;
   final VoidCallback? onCartChanged;
+  final int expirationWarningDays;
 
   @override
   State<InventoryScreen> createState() => _InventoryScreenState();
@@ -182,6 +184,7 @@ class _InventoryScreenState extends State<InventoryScreen> {
                 padding: const EdgeInsets.only(bottom: 12),
                 child: _ProductCard(
                   product: product,
+                  expirationWarningDays: widget.expirationWarningDays,
                   onIncrease: () => _changeUnits(index, 1),
                   onDecrease: () => _changeUnits(index, -1),
                   onSetUnits: () => _setUnits(index),
@@ -441,6 +444,7 @@ class _ProductCard extends StatelessWidget {
     required this.onEdit,
     required this.onDelete,
     required this.onAddToCart,
+    required this.expirationWarningDays,
   });
   final ProductFormData product;
   final VoidCallback onIncrease;
@@ -449,6 +453,7 @@ class _ProductCard extends StatelessWidget {
   final VoidCallback onEdit;
   final VoidCallback onDelete;
   final VoidCallback onAddToCart;
+  final int expirationWarningDays;
 
   @override
   Widget build(BuildContext context) {
@@ -556,7 +561,7 @@ class _ProductCard extends StatelessWidget {
         .inDays;
     if (days < 0) return ('Caducado', true);
     if (days == 0) return ('Consumir hoy', true);
-    return ('Caduca en $days días', days <= 3);
+    return ('Caduca en $days días', days <= expirationWarningDays);
   }
 
   String _formatProductAmount(ProductFormData product) {

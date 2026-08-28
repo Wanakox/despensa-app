@@ -4,6 +4,7 @@ import 'package:share_plus/share_plus.dart';
 import '../../../app/theme/app_colors.dart';
 import '../../../core/widgets/app_button.dart';
 import '../../../core/services/auth_service.dart';
+import '../../../core/services/expiration_preferences.dart';
 import '../data/member_service.dart';
 import '../domain/household_member.dart';
 import '../../activity/data/activity_service.dart';
@@ -12,11 +13,15 @@ class MembersScreen extends StatefulWidget {
   const MembersScreen({
     required this.householdName,
     this.householdId,
+    this.expirationWarningDays = ExpirationPreferences.defaultWarningDays,
+    this.onExpirationWarningDaysChanged,
     super.key,
   });
 
   final String householdName;
   final String? householdId;
+  final int expirationWarningDays;
+  final ValueChanged<int>? onExpirationWarningDaysChanged;
 
   @override
   State<MembersScreen> createState() => _MembersScreenState();
@@ -74,6 +79,20 @@ class _MembersScreenState extends State<MembersScreen> {
                 ],
               ),
             ),
+          const SizedBox(height: 16),
+          Card(
+            child: ListTile(
+              leading: const Icon(Icons.notifications_active_outlined),
+              title: const Text('Aviso de caducidad'),
+              subtitle: Text(
+                widget.expirationWarningDays == 0
+                    ? 'Avisar el mismo día'
+                    : 'Avisar con ${widget.expirationWarningDays} días de antelación',
+              ),
+              trailing: const Icon(Icons.chevron_right),
+              onTap: _configureExpirationWarning,
+            ),
+          ),
           const SizedBox(height: 22),
           if (_loading)
             const Padding(
@@ -153,6 +172,41 @@ class _MembersScreenState extends State<MembersScreen> {
     } catch (error) {
       debugPrint('Error al invitar miembro: $error');
       if (mounted) _showMessage('No se ha podido enviar la invitación.');
+    }
+  }
+
+  Future<void> _configureExpirationWarning() async {
+    final selected = await showDialog<int>(
+      context: context,
+      builder: (context) => SimpleDialog(
+        title: const Text('Avisar antes de caducar'),
+        children: [0, 1, 3, 7, 14]
+            .map(
+              (days) => ListTile(
+                leading: Icon(
+                  days == widget.expirationWarningDays
+                      ? Icons.radio_button_checked
+                      : Icons.radio_button_off,
+                ),
+                title: Text(days == 0 ? 'El mismo día' : '$days días antes'),
+                onTap: () => Navigator.pop(context, days),
+              ),
+            )
+            .toList(),
+      ),
+    );
+    if (selected == null || !mounted) return;
+    try {
+      await ExpirationPreferences.save(
+        householdName: widget.householdName,
+        householdId: widget.householdId,
+        days: selected,
+      );
+      widget.onExpirationWarningDaysChanged?.call(selected);
+      if (mounted) _showMessage('Margen de caducidad actualizado');
+    } catch (error) {
+      debugPrint('Error al guardar el margen de caducidad: $error');
+      if (mounted) _showMessage('No se ha podido guardar el margen.');
     }
   }
 

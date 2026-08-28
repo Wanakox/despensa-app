@@ -17,10 +17,12 @@ class HomeScreen extends StatefulWidget {
     required this.onNavigate,
     required this.onLogout,
     this.householdId,
+    this.expirationWarningDays = 3,
     super.key,
   });
   final String householdName;
   final String? householdId;
+  final int expirationWarningDays;
   final ValueChanged<int> onNavigate;
   final VoidCallback onLogout;
 
@@ -57,7 +59,8 @@ class _HomeScreenState extends State<HomeScreen> {
       if (value == null) return false;
       final date = DateTime.tryParse(value);
       return date != null &&
-          DateUtils.dateOnly(date).difference(today).inDays <= 3;
+          DateUtils.dateOnly(date).difference(today).inDays <=
+              widget.expirationWarningDays;
     }).length;
   }
 

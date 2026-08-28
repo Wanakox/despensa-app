@@ -1,6 +1,7 @@
 import 'package:despensa/app/despensa_app.dart';
 import 'package:despensa/core/services/local_storage.dart';
 import 'package:despensa/core/services/household_data_service.dart';
+import 'package:despensa/core/services/expiration_preferences.dart';
 import 'package:despensa/features/inventory/presentation/inventory_screen.dart';
 import 'package:despensa/features/inventory/presentation/product_form_screen.dart';
 import 'package:despensa/features/households/presentation/households_screen.dart';
@@ -24,6 +25,22 @@ void main() {
     await LocalStorage.writeList('test.households', data);
 
     expect(await LocalStorage.readList('test.households'), data);
+  });
+
+  test('conserva el margen de aviso de caducidad por hogar', () async {
+    await ExpirationPreferences.save(
+      householdName: 'Casa avisos',
+      householdId: null,
+      days: 7,
+    );
+
+    expect(
+      await ExpirationPreferences.load(
+        householdName: 'Casa avisos',
+        householdId: null,
+      ),
+      7,
+    );
   });
 
   test('conserva el identificador remoto de un producto', () {
