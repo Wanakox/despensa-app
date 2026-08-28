@@ -139,8 +139,6 @@ abstract final class HouseholdService {
     final household = firestore
         .collection('households')
         .doc(invitation.householdId);
-    final existingMembers = await household.collection('members').get();
-    final memberCount = existingMembers.docs.length + 1;
     final batch = firestore.batch();
     batch.set(household.collection('members').doc(user.uid), {
       'name': user.displayName ?? user.email?.split('@').first ?? 'Miembro',
@@ -157,7 +155,6 @@ abstract final class HouseholdService {
           .doc(invitation.householdId),
       {
         'name': invitation.householdName,
-        'members': memberCount,
         'role': 'member',
         'joinedAt': FieldValue.serverTimestamp(),
       },
